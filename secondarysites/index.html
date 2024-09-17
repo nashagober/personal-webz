@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css" />
+    <title>do.shit</title>
+    <link rel="icon" type="image/x-icon" href="imgs/favicon.ico" />
+  </head>
+  <body>
+    <main id="main" role="main">
+      <div id="cover-page">
+        <h1 class="line-1">Remaining Lives: 1</h1>
+        <h2 class="line-2">Make it count.</h2>
+        <button id="clickme">begin</button>
+      </div>
+      <div id="main-page">
+        <div id="header1">
+          <!-- <img src="imgs/nashgoberlogo2.png" alt="Nash Gober" /> -->
+          NASH GOBER
+        </div>
+        <!-- <hr /> -->
+        <div id="icons-scroll">
+          <div id="icons">
+            <div class="icon-wrap" id="blog">
+              <div class="icon blog">
+                <a href="secondarysites/blog.html">
+                  <img src="imgs/IMG_0962.JPG" alt="blog" />
+                </a>
+              </div>
+              <div class="icon-text">BLOG</div>
+            </div>
+
+            <div class="icon-wrap" id="pics">
+              <div class="icon pics">
+                <a href="secondarysites/pics.html">
+                  <img src="imgs/IMG_1013.JPG" alt="pics" />
+                </a>
+              </div>
+              <div class="icon-text">PICTURES</div>
+            </div>
+
+            <div class="icon-wrap" id="vids">
+              <div class="icon vids">
+                <a href="secondarysites/vids.html">
+                  <img src="imgs/IMG_1019.JPG" alt="vids" />
+                </a>
+              </div>
+              <div class="icon-text">VIDEOS</div>
+            </div>
+
+            <div class="icon-wrap" id="projects">
+              <div class="icon projects">
+                <a href="secondarysites/projects.html">
+                  <img src="imgs/IMG_1279.JPG" alt="projects" />
+                </a>
+              </div>
+              <div class="icon-text">PROJECTS</div>
+            </div>
+
+            <div class="icon-wrap" id="randweb">
+              <div class="icon randweb">
+                <a href="secondarysites/randweb.html">
+                  <img src="imgs/IMG_1654.JPG" alt="randweb" />
+                </a>
+              </div>
+              <div class="icon-text">TAKETHECHANCE</div>
+            </div>
+
+            <div class="icon-wrap" id="aboutme">
+              <div class="icon aboutme">
+                <a href="secondarysites/aboutme.html">
+                  <img src="imgs/IMG_1655.JPG" alt="aboutme" />
+                </a>
+              </div>
+              <div class="icon-text">ME :D</div>
+            </div>
+
+            <div class="icon-wrap" id="thingsilike">
+              <div class="icon thingsilike">
+                <a href="secondarysites/thingsilike.html">
+                  <img src="imgs/IMG_1656.JPG" alt="thingsilike" />
+                </a>
+              </div>
+              <div class="icon-text">THINGSILIKE</div>
+            </div>
+          </div>
+        </div>
+        <!-- <hr /> -->
+        <div id="footer">
+          <div class="socials" id="insta">
+            <a href="https://www.instagram.com/nashgober/">
+              <img src="imgs/icons8-instagram-64.png" alt="insta" />
+            </a>
+          </div>
+          <div class="socials" id="youtube">
+            <a href="https://www.youtube.com/channel/UCv57lL_GEgCdnkmjnCo0m7w">
+              <img src="imgs/icons8-youtube-64.png" alt="youtube" />
+            </a>
+          </div>
+          <div class="socials" id="twitter">
+            <a href="https://x.com/octagonpr0phet">
+              <img src="imgs/icons8-twitter-64.png" alt="twitter" />
+            </a>
+          </div>
+          <div class="socials" id="pinterest">
+            <a href="https://www.pinterest.com/nashagober/">
+              <img src="imgs/icons8-pinterest-64.png" alt="venmo" />
+            </a>
+          </div>
+          <div class="socials" id="linkedin">
+            <a href="www.linkedin.com/in/nash-gober-1098142a6">
+              <img src="imgs/icons8-linkedin-64.png" alt="linkedin" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      function debounce(fn, delay = 100, options = {}) {
+        let timerId;
+        return (...args) => {
+          const { leading = false, trailing = true } = options;
+          const callNow = leading && !timerId;
+          clearTimeout(timerId);
+          timerId = setTimeout(() => {
+            if (trailing || callNow) {
+              fn(...args);
+            }
+            timerId = undefined;
+          }, delay);
+          if (callNow) {
+            fn(...args);
+          }
+        };
+      }
+      let scrollElement = document.getElementById("icons-scroll");
+      let iconRows = Array.from(scrollElement.querySelectorAll(".icon-wrap"));
+
+      function handleIconRows() {
+        const scrollRect = scrollElement.getBoundingClientRect();
+        const scrollCenter = (scrollRect.left + scrollRect.right) / 2;
+        scrollElement = document.getElementById("icons-scroll");
+        iconRows = Array.from(scrollElement.querySelectorAll(".icon-wrap"));
+
+        iconRows.forEach((iconRow) => {
+          const iconRect = iconRow.getBoundingClientRect();
+          const iconCent = (iconRect.right + iconRect.left) / 2;
+          const distfromcenter = Math.abs(iconCent - scrollCenter);
+          const maxScale = 1.0;
+          const minScale = 0.5;
+          const scale = 1 - (distfromcenter / scrollCenter) * (1 - minScale);
+          console.log(scale);
+          iconRow.style.setProperty("transform", `scale(${scale})`);
+        });
+      }
+
+      const wrapDebounce = (fn) => debounce(fn, 0, { leading: true });
+      handleIconRows();
+      scrollElement.addEventListener("scroll", wrapDebounce(handleIconRows), {
+        passive: true,
+      });
+
+      window.addEventListener("resize", handleIconRows);
+
+      const overlay = document.getElementById("cover-page");
+      const revealButton = document.getElementById("clickme");
+      const content = document.getElementById("main-page");
+      revealButton.addEventListener("click", () => {
+        overlay.classList.add("hidden");
+        content.classList.add("visible");
+      });
+
+      revealButton.addEventListener("click", handleIconRows);
+
+      revealButton.addEventListener("click", function () {
+        const scrollContainer = document.getElementById("icons-scroll");
+        const scrollContent = document.getElementById("icons");
+        const images = Array.from(scrollContent.children);
+
+        images.forEach((image) => {
+          scrollContent.appendChild(image.cloneNode(true));
+        });
+        images.forEach((image) => {
+          scrollContent.appendChild(image.cloneNode(true));
+        });
+
+        const middleScrollPosition = scrollContent.scrollWidth / 2;
+        scrollContainer.scrollLeft = middleScrollPosition;
+
+        scrollContainer.addEventListener("scroll", () => {
+          const maxScrollLeft = (scrollContent.scrollWidth * 2) / 3;
+          const minScrollLeft = scrollContent.scrollWidth / 3;
+
+          if (scrollContainer.scrollLeft >= maxScrollLeft) {
+            scrollContainer.scrollLeft -= scrollContent.scrollWidth / 3;
+          } else if (scrollContainer.scrollLeft <= minScrollLeft) {
+            scrollContainer.scrollLeft += scrollContent.scrollWidth / 3;
+          }
+        });
+
+        scrollContainer.scroll({
+          top: 0,
+          left: scrollContent.scrollWidth / 2,
+          behavior: "auto",
+        });
+      });
+
+      const blogElement = document.getElementById("blog");
+      const picsElement = document.getElementById("pics");
+      const vidsElement = document.getElementById("vids");
+      const projectsElement = document.getElementById("projects");
+      const randwebElement = document.getElementById("randweb");
+      const aboutmeElement = document.getElementById("aboutme");
+      const thingsilikeElement = document.getElementById("thingsilike");
+
+      const header = document.getElementById("header1");
+
+      header.addEventListener("click", () => {
+        header.classList.toggle("rainbow_anim");
+        if (header.style.color == "black") {
+          header.style.color = "whitesmoke";
+        } else {
+          header.style.color = "black";
+        }
+      });
+
+      const body = document.getElementsByTagName("body")[0];
+
+      header.addEventListener("click", () => {
+        body.classList.toggle("rainbow_anim");
+        if (body.style.color == "transparent") {
+          body.style.color = "black";
+        } else {
+          body.style.color = "transparent";
+        }
+      });
+    </script>
+  </body>
+</html>
