@@ -26,6 +26,4 @@ app.use("/vids", vidsRouter);
 app.use("/", indexRouter);
 
 const PORT = 3000;
-app.listen(PORT, () =>
-  console.log(`My first Express app - listening on port ${PORT}!`)
-);
+app.listen(PORT, () => console.log(`server running on port ${PORT}!`));

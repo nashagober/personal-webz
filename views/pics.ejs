@@ -4,6 +4,191 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>pics</title>
+    <style>
+      body {
+        background: linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 1) 0%,
+          rgba(27, 27, 29, 1) 50%,
+          rgba(0, 0, 0, 1) 100%
+        );
+      }
+      #picsheader {
+        width: 100%;
+        height: 15vh;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: end;
+        margin-bottom: 5vh;
+      }
+      #picssubheader1 {
+        text-align: left;
+        font-size: 2vw;
+        font-family: "Inconsolata", monospace;
+        color: whitesmoke;
+        letter-spacing: 0vh;
+      }
+      #picssubheader2 {
+        text-align: center;
+        font-size: 6vw;
+        font-family: "Inconsolata", monospace;
+        color: whitesmoke;
+        letter-spacing: 0vh;
+        width: 50vw;
+      }
+      #picssubheader3 {
+        text-align: right;
+        font-size: 2vw;
+        font-family: "Inconsolata", monospace;
+        color: whitesmoke;
+        letter-spacing: 0vh;
+      }
+      #picstorage {
+        width: 66vw;
+        margin: auto;
+      }
+      .row {
+        display: flex;
+        margin-bottom: 10px;
+        gap: 0.5vw;
+      }
+      .row img {
+        width: 25vw;
+        height: 20vh;
+        object-fit: cover;
+        border-radius: 3px;
+        filter: grayscale(100%) brightness(20%);
+      }
+      .row img:hover {
+        filter: none;
+        transition: transform 0.5s ease;
+        -webkit-filter: grayscale(0);
+        transform: scale(1.05);
+        transition: 0.5s ease;
+      }
+      .row img:hover {
+        border-bottom: 3px solid rgb(255, 255, 62);
+      }
+      .row img:last-child {
+        margin-right: 0;
+      }
+      #borderline {
+        height: 2px;
+        /* Set the hr color */
+        color: whitesmoke;
+        width: 80vw;
+        margin-bottom: 10px;
+      }
+      ::-webkit-scrollbar {
+        background: black;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgb(28, 28, 28);
+        border-radius: 10px;
+      }
+
+      .lightbox {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+      }
+      .lightbox img {
+        max-width: 90%;
+        max-height: 90%;
+      }
+      .lightbox.active {
+        display: flex;
+      }
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      #lightbox-img {
+        border-radius: 5px;
+      }
+      #picsfooter {
+        width: 100%;
+        height: 5vh;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: end;
+        margin-bottom: 5vh;
+        margin-top: 2vh;
+        text-align: center;
+        font-size: 1vw;
+        font-family: "Inconsolata", monospace;
+        color: whitesmoke;
+        letter-spacing: 0vh;
+        cursor: pointer;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <div id="picsheader">
+      <div id="picssubheader1">＼（＾○＾）</div>
+      <div id="picssubheader2">pics</div>
+      <div id="picssubheader3">（＾○＾）／</div>
+    </div>
+    <hr id="borderline" />
+    <div id="picstorage">
+      <% for (let i = 0; i < 45; i += 3){ %>
+      <div class="row">
+        <% for (let j = i; j < i + 3 && j < images.length; j++) { %> <% let p =
+        Math.floor(Math.random() * images.length) %>
+        <img
+          src="/pics/<%=images[p]%>"
+          alt=" <%=images[p]%>"
+          onclick="openLightbox('/pics/<%=images[p]%>')"
+        />
+        <%} %>
+      </div>
+      <% } %>
+    </div>
+    <div id="lightbox" class="lightbox">
+      <span class="close" onclick="closeLightbox()">&times;</span>
+      <img id="lightbox-img" src="" alt="Enlarged Image" />
+    </div>
+    <div id="picsfooter">back to top</div>
+
+    <script>
+      function openLightbox(imageSrc) {
+        document.getElementById("lightbox-img").src = imageSrc;
+
+        document.getElementById("lightbox").classList.add("active");
+      }
+
+      function closeLightbox() {
+        document.getElementById("lightbox").classList.remove("active");
+      }
+
+      document
+        .getElementById("lightbox")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            closeLightbox();
+          }
+        });
+
+      document
+        .getElementById("picsfooter")
+        .addEventListener("click", function (e) {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    </script>
+  </body>
 </html>
