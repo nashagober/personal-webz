@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const path = require("node:path");
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");

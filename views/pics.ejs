@@ -12,6 +12,8 @@
           rgba(27, 27, 29, 1) 50%,
           rgba(0, 0, 0, 1) 100%
         );
+        background-color: rgba(27, 27, 29, 1);
+        overflow-x: hidden;
       }
       #picsheader {
         width: 100%;
@@ -146,10 +148,13 @@
     </div>
     <hr id="borderline" />
     <div id="picstorage">
-      <% for (let i = 0; i < 45; i += 3){ %>
+      <%const foundimgs = []%> <% for (let i = 0; i < 45; i += 3){ %>
       <div class="row">
         <% for (let j = i; j < i + 3 && j < images.length; j++) { %> <% let p =
         Math.floor(Math.random() * images.length) %>
+        <%while(foundimgs.includes(images[p])){ %> <% p =
+        Math.floor(Math.random() * images.length) %> <% } %> <%
+        foundimgs.push(images[p]) %>
         <img
           src="/pics/<%=images[p]%>"
           alt=" <%=images[p]%>"
